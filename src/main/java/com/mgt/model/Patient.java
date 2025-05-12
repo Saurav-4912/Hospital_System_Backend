@@ -52,6 +52,4 @@ public class Patient
     @Column(name = "address", nullable = false, columnDefinition = "TEXT")
     private String address;
 
-
-
 }

@@ -1,7 +1,6 @@
 
 package com.mgt.controller;
 
-
 import com.mgt.model.Patient;
 import com.mgt.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
