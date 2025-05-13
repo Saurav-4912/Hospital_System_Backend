@@ -2,15 +2,24 @@ package com.mgt.controller;
 
 import com.mgt.jwtServices.JwtService;
 import com.mgt.model.Patient;
+import com.mgt.model.User;
 import com.mgt.repository.PatientRepo;
+import com.mgt.repository.UserRepo;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
-
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
+
 public class PatientController {
 
     @Autowired
@@ -19,24 +28,78 @@ public class PatientController {
     @Autowired
     private JwtService jwtService;
 
-   
-    @PostMapping("/addPatient")
-    public Patient add(@RequestBody Patient patient , @RequestHeader("Authorization") String authHeader){
-        String token = authHeader.substring(7);
+    @Autowired
+    private UserRepo userRepo;
 
-        Long userId = jwtService.extractUserId(token);
-        //Optional<User> user = userRepo.findByUserId(userId);
-        //patient.setUser(user);
-
-        return patientRepo.save(patient);
-
+    @GetMapping("/testPatient")
+    public String getMethodName() {
+        return "This patient api";
     }
+
+   @PostMapping("/addPatient")
+@PreAuthorize("hasRole('PATIENT')")
+public ResponseEntity<?> addPatient(
+        @RequestParam String fullname,
+        @RequestParam String phone,
+        @RequestParam String dob, // as String, parse later
+        @RequestParam String gender,
+        @RequestParam String bloodgroup,
+        @RequestParam String citystate,
+        @RequestParam String emergencycontact,
+        @RequestParam String address,
+        @RequestHeader("Authorization") String authorizationHeader) {
+
+    try {
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Collections.singletonMap("error", "Missing or invalid Authorization header"));
+        }
+
+        String token = authorizationHeader.substring(7);
+        Long userId = jwtService.extractUserId(token);
+
+        if (userId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Collections.singletonMap("error", "Invalid JWT token"));
+        }
+
+        Optional<User> optionalUser = userRepo.findById(userId);
+        if (optionalUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Collections.singletonMap("error", "User not found"));
+        }
+
+        // Convert dob string to LocalDate
+        LocalDate dobParsed = LocalDate.parse(dob.trim());
+
+
+        // Build patient object
+        Patient patient = new Patient();
+        patient.setFullname(fullname);
+        patient.setPhone(phone);
+        patient.setDob(dobParsed);
+        patient.setGender(gender);
+        patient.setBloodgroup(bloodgroup);
+        patient.setCitystate(citystate);
+        patient.setEmergencycontact(emergencycontact);
+        patient.setAddress(address);
+        patient.setUser(optionalUser.get());
+
+        // Save patient
+        patientRepo.save(patient);
+
+        return ResponseEntity.ok(Collections.singletonMap("message", "Saved successfully!"));
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Collections.singletonMap("error", "An error occurred: " + e.getMessage()));
+    }
+}
 
     @GetMapping("/getListPatient")
-    public List<Patient> getAllPatient(){
+    public List<Patient> getAllPatient() {
         return patientRepo.findAll();
     }
-
-
 
 }

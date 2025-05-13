@@ -7,45 +7,32 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="patient")
 public class Patient
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
     private Long id;
 
-    @Column(name = "full_name", nullable = false)
-    private String fullName;
+   
+    private String fullname;
 
-    @Column(name = "email", nullable = false, unique = true)
-    private String email;
 
-    @Column(name = "phone", nullable = false)
     private String phone;
 
-    @Column(name = "dob", nullable = false)
+
     private LocalDate dob;
 
-    @Column(name = "password", nullable = false)
-    private String password;
-
-    @Transient
-    private String confirmPassword;
-
-    @Column(name = "gender", nullable = false)
+  
     private String gender;
 
-    @Column(name = "blood_group", nullable = false)
-    private String bloodGroup;
+    private String bloodgroup;
 
-    @Column(name = "city_state", nullable = false)
-    private String cityState;
+    private String citystate;
 
-    @Column(name = "emergency_contact", nullable = false)
-    private String emergencyContact;
 
-    @Column(name = "address", nullable = false, columnDefinition = "TEXT")
+    private String emergencycontact;
+
+   
     private String address;
 
     @OneToOne
@@ -56,18 +43,16 @@ public class Patient
     public Patient() {
     }
 
-    public Patient(Long id, String fullName, String email, String phone, LocalDate dob, String password, String confirmPassword, String gender, String bloodGroup, String cityState, String emergencyContact, String address, User user) {
+    public Patient(Long id, String fullname, String phone, LocalDate dob, String gender, String bloodgroup,
+            String citystate, String emergencycontact, String address, User user) {
         this.id = id;
-        this.fullName = fullName;
-        this.email = email;
+        this.fullname = fullname;
         this.phone = phone;
         this.dob = dob;
-        this.password = password;
-        this.confirmPassword = confirmPassword;
         this.gender = gender;
-        this.bloodGroup = bloodGroup;
-        this.cityState = cityState;
-        this.emergencyContact = emergencyContact;
+        this.bloodgroup = bloodgroup;
+        this.citystate = citystate;
+        this.emergencycontact = emergencycontact;
         this.address = address;
         this.user = user;
     }
@@ -80,20 +65,12 @@ public class Patient
         this.id = id;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getPhone() {
@@ -112,22 +89,6 @@ public class Patient
         this.dob = dob;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
-
     public String getGender() {
         return gender;
     }
@@ -136,28 +97,28 @@ public class Patient
         this.gender = gender;
     }
 
-    public String getBloodGroup() {
-        return bloodGroup;
+    public String getBloodgroup() {
+        return bloodgroup;
     }
 
-    public void setBloodGroup(String bloodGroup) {
-        this.bloodGroup = bloodGroup;
+    public void setBloodgroup(String bloodgroup) {
+        this.bloodgroup = bloodgroup;
     }
 
-    public String getCityState() {
-        return cityState;
+    public String getCitystate() {
+        return citystate;
     }
 
-    public void setCityState(String cityState) {
-        this.cityState = cityState;
+    public void setCitystate(String citystate) {
+        this.citystate = citystate;
     }
 
-    public String getEmergencyContact() {
-        return emergencyContact;
+    public String getEmergencycontact() {
+        return emergencycontact;
     }
 
-    public void setEmergencyContact(String emergencyContact) {
-        this.emergencyContact = emergencyContact;
+    public void setEmergencycontact(String emergencycontact) {
+        this.emergencycontact = emergencycontact;
     }
 
     public String getAddress() {
@@ -175,4 +136,7 @@ public class Patient
     public void setUser(User user) {
         this.user = user;
     }
+
+   
+   
 }
