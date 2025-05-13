@@ -5,7 +5,6 @@ import com.mgt.jwtServices.JwtService;
 import com.mgt.model.AuthRequest;
 import com.mgt.model.User;
 import com.mgt.model.UserInfoService;
-import com.mgt.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
-import java.util.Optional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api")
@@ -32,8 +33,6 @@ public class UserController
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private UserRepo userRepo;
 
 
     @GetMapping("/welcome")
@@ -60,10 +59,7 @@ public class UserController
                     new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
 
             if (authentication.isAuthenticated()) {
-                Optional<User> optionalUser = userRepo.findByUserName(authRequest.getUsername());
-
-                if (optionalUser.isPresent()) {
-                    User user = optionalUser.get();
+            
 
 
                         String token = jwtService.generateToken(authRequest.getUsername());
@@ -72,13 +68,17 @@ public class UserController
                 } else {
                     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
                 }
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-            }
+          
         } catch (AuthenticationException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed: " + ex.getMessage());
         }
     }
+
+    @GetMapping("/testApi")
+    public String getMethodName() {
+        return "This secure api endpoint";
+    }
+    
 
 
 }

@@ -24,21 +24,22 @@ public class UserInfoService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = repository.findByUserName(username)
+        User user = repository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
         return new org.springframework.security.core.userdetails.User(
-                user.getUserName(), // assuming email is used as username
+                user.getUsername(), // assuming email is used as username
                 user.getPassword(),
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()))
         );
     }
 
     public String addUser(User userInfo) {
-        if (repository.existsByUserName(userInfo.getUserName())) {
+        if (repository.existsByUsername(userInfo.getUsername())) {
             return "Error: Email already exists!";
         }
 
+        userInfo.setUsername(userInfo.getUsername());
         userInfo.setPassword(encoder.encode(userInfo.getPassword()));
 
         repository.save(userInfo);

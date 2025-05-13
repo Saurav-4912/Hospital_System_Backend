@@ -36,7 +36,7 @@ public class JwtService {
     public String generateToken(String email) {
         Map<String, Object> claims = new HashMap<>();
 
-        Optional<User> optionalUser = userRepo.findByUserName(email);
+        Optional<User> optionalUser = userRepo.findByUsername(email);
 
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();

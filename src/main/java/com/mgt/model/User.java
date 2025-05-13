@@ -3,7 +3,6 @@ package com.mgt.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
-import java.util.List;
 
 
 @Entity
@@ -13,7 +12,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String userName;
+    private String username;
 
     private String password;
 
@@ -28,51 +27,65 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String userName, String password, Role role, Patient patient) {
+
+    public User(Long id, String username, String password, Role role, Patient patient) {
         this.id = id;
-        this.userName = userName;
+        this.username = username;
         this.password = password;
         this.role = role;
         this.patient = patient;
     }
+
 
     public Long getId() {
         return id;
     }
 
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+
+    public void setUsername(String username) {
+        this.username = username;
     }
+
 
     public String getPassword() {
         return password;
     }
 
+
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     public Role getRole() {
         return role;
     }
 
+
     public void setRole(Role role) {
         this.role = role;
     }
+
 
     public Patient getPatient() {
         return patient;
     }
 
+
     public void setPatient(Patient patient) {
         this.patient = patient;
     }
+
+    
+   
 }
