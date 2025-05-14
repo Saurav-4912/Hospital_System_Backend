@@ -39,13 +39,13 @@ public class PatientController {
    @PostMapping("/addPatient")
 @PreAuthorize("hasRole('PATIENT')")
 public ResponseEntity<?> addPatient(
-        @RequestParam String fullname,
+        @RequestParam String fullName,
         @RequestParam String phone,
         @RequestParam String dob, // as String, parse later
         @RequestParam String gender,
-        @RequestParam String bloodgroup,
-        @RequestParam String citystate,
-        @RequestParam String emergencycontact,
+        @RequestParam String bloodGroup,
+        @RequestParam String cityState,
+        @RequestParam String emergencyContact,
         @RequestParam String address,
         @RequestHeader("Authorization") String authorizationHeader) {
 
@@ -75,13 +75,13 @@ public ResponseEntity<?> addPatient(
 
         // Build patient object
         Patient patient = new Patient();
-        patient.setFullname(fullname);
+        patient.setFullName(fullName);
         patient.setPhone(phone);
         patient.setDob(dobParsed);
         patient.setGender(gender);
-        patient.setBloodgroup(bloodgroup);
-        patient.setCitystate(citystate);
-        patient.setEmergencycontact(emergencycontact);
+        patient.setBloodGroup(bloodGroup);
+        patient.setCityState(cityState);
+        patient.setEmergencyContact(emergencyContact);
         patient.setAddress(address);
         patient.setUser(optionalUser.get());
 
@@ -98,6 +98,7 @@ public ResponseEntity<?> addPatient(
 }
 
     @GetMapping("/getListPatient")
+    @PreAuthorize("hasRole('RECEPTIONIST')")
     public List<Patient> getAllPatient() {
         return patientRepo.findAll();
     }
