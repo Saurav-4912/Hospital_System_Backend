@@ -15,7 +15,7 @@ import com.mgt.service.OtpService;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:4300"})
 public class AuthController {
 
     @Autowired

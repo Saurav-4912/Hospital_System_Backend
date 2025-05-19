@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "/*")
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:4300"})
 public class AppointmentController {
 
     @Autowired

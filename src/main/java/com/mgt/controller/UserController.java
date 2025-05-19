@@ -26,6 +26,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:4300"})
 public class UserController
 {
 
@@ -81,7 +82,6 @@ public class UserController
     }
 
     @GetMapping("/getUserById")
-    @PreAuthorize("hasRole('PATIENT')")
     public ResponseEntity<?> getUserById(@RequestHeader("Authorization") String authorizationHeader) {
 
         try {
