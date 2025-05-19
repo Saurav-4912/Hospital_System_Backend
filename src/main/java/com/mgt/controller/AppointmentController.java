@@ -26,7 +26,6 @@ public class AppointmentController {
     @GetMapping("/getAppointments")
     public List<BookAppointment> showAppt(){
         return bookApptRepo.findAll();
+
     }
-
-
 }

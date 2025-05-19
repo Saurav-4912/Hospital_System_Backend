@@ -2,6 +2,9 @@ package com.mgt.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @Entity
 @Table(name="appointments")
 public class BookAppointment {
@@ -14,36 +17,28 @@ public class BookAppointment {
     @Column(name="fullName")
     private String fullName;
 
-    @Column(name="email")
-    private String email;
+    @Column(name="contactNumber")
+    private String contactNumber;
 
-    @Column(name="mobileNo")
-    private String mobileNo;
+    @Column(name="selectedDate")
+    private LocalDate selectedDate;
 
-    @Column(name="disease")
-    private String disease;
+    @Column(name="selectedTime")
+    private LocalTime selectedTime;
 
-    @Column(name="address")
-    private String address;
-
-    @Column(name="gender")
-    private String gender;
-
-    @Column(name="age")
-    private int age;
+    @Column(name="message")
+    private String message;
 
     public BookAppointment() {
     }
 
-    public BookAppointment(Long id, String fullName, String email, String mobileNo, String disease, String address, String gender, int age) {
+    public BookAppointment(Long id, String fullName, String contactNumber, LocalDate selectedDate, LocalTime selectedTime, String message) {
         this.id = id;
         this.fullName = fullName;
-        this.email = email;
-        this.mobileNo = mobileNo;
-        this.disease = disease;
-        this.address = address;
-        this.gender = gender;
-        this.age = age;
+        this.contactNumber = contactNumber;
+        this.selectedDate = selectedDate;
+        this.selectedTime = selectedTime;
+        this.message = message;
     }
 
     public Long getId() {
@@ -62,51 +57,35 @@ public class BookAppointment {
         this.fullName = fullName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getContactNumber() {
+        return contactNumber;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 
-    public String getMobileNo() {
-        return mobileNo;
+    public LocalDate getSelectedDate() {
+        return selectedDate;
     }
 
-    public void setMobileNo(String mobileNo) {
-        this.mobileNo = mobileNo;
+    public void setSelectedDate(LocalDate selectedDate) {
+        this.selectedDate = selectedDate;
     }
 
-    public String getDisease() {
-        return disease;
+    public LocalTime getSelectedTime() {
+        return selectedTime;
     }
 
-    public void setDisease(String disease) {
-        this.disease = disease;
+    public void setSelectedTime(LocalTime selectedTime) {
+        this.selectedTime = selectedTime;
     }
 
-    public String getAddress() {
-        return address;
+    public String getMessage() {
+        return message;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
