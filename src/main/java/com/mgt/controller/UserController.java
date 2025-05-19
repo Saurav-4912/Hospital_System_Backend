@@ -5,9 +5,12 @@ import com.mgt.jwtServices.JwtService;
 import com.mgt.model.AuthRequest;
 import com.mgt.model.User;
 import com.mgt.model.UserInfoService;
+import com.mgt.repository.UserRepo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,7 +18,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
-import org.springframework.web.bind.annotation.GetMapping;
+import java.util.Map;
+import java.util.Optional;
+
 
 
 
@@ -33,7 +38,8 @@ public class UserController
     @Autowired
     private AuthenticationManager authenticationManager;
 
-
+    @Autowired
+    private UserRepo userRepo;
 
     @GetMapping("/welcome")
     public String welcome() {
@@ -73,6 +79,43 @@ public class UserController
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed: " + ex.getMessage());
         }
     }
+
+    @GetMapping("/getUserById")
+    @PreAuthorize("hasRole('PATIENT')")
+    public ResponseEntity<?> getUserById(@RequestHeader("Authorization") String authorizationHeader) {
+
+        try {
+
+             if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Collections.singletonMap("error", "Missing or invalid Authorization header"));
+        }
+
+        String token = authorizationHeader.substring(7);
+        Long userId = jwtService.extractUserId(token);
+
+        if (userId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Collections.singletonMap("error", "Invalid JWT token"));
+        }
+
+        Optional<User> optionalUser = userRepo.findById(userId);
+        if (optionalUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Collections.singletonMap("error", "User not found"));
+        }
+
+        return ResponseEntity.ok(optionalUser.get());
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Collections.singletonMap("error", "An error occurred: " + e.getMessage()));
+        }
+
+        
+    }
+    
 
     @GetMapping("/testApi")
     public String getMethodName() {
