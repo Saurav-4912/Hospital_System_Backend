@@ -14,11 +14,20 @@ public class BookAppointment {
     @Column(name="id")
     private Long id;
 
-    @Column(name="fullName")
-    private String fullName;
+    @Column(name="patientName")
+    private String patientName;
 
     @Column(name="contactNumber")
     private String contactNumber;
+
+    @Column(name="age")
+    private int age;
+
+    @Column(name="gender")
+    private String gender;
+
+    @Column(name="disease")
+    private String disease;
 
     @Column(name="selectedDate")
     private LocalDate selectedDate;
@@ -32,10 +41,13 @@ public class BookAppointment {
     public BookAppointment() {
     }
 
-    public BookAppointment(Long id, String fullName, String contactNumber, LocalDate selectedDate, LocalTime selectedTime, String message) {
+    public BookAppointment(Long id, String patientName, String contactNumber, int age, String gender, String disease, LocalDate selectedDate, LocalTime selectedTime, String message) {
         this.id = id;
-        this.fullName = fullName;
+        this.patientName = patientName;
         this.contactNumber = contactNumber;
+        this.age = age;
+        this.gender = gender;
+        this.disease = disease;
         this.selectedDate = selectedDate;
         this.selectedTime = selectedTime;
         this.message = message;
@@ -49,12 +61,12 @@ public class BookAppointment {
         this.id = id;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getPatientName() {
+        return patientName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
     }
 
     public String getContactNumber() {
@@ -63,6 +75,30 @@ public class BookAppointment {
 
     public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getDisease() {
+        return disease;
+    }
+
+    public void setDisease(String disease) {
+        this.disease = disease;
     }
 
     public LocalDate getSelectedDate() {

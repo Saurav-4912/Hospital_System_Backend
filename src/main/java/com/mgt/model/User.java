@@ -16,9 +16,7 @@ public class User {
 
     private String lastName;
 
-    private int age;
 
-    private String address;
 
     private String username;
 
@@ -36,13 +34,12 @@ public class User {
     }
 
 
-    public User(Long id, String firstName, String lastName, int age, String address, String username, String password,
+    public User(Long id, String firstName, String lastName,  String username, String password,
             Role role, Patient patient) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
-        this.address = address;
+
         this.username = username;
         this.password = password;
         this.role = role;
@@ -80,24 +77,8 @@ public class User {
     }
 
 
-    public int getAge() {
-        return age;
-    }
 
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-
-    public String getAddress() {
-        return address;
-    }
-
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
 
     public String getUsername() {
