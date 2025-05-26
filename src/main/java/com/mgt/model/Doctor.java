@@ -35,7 +35,6 @@ public class Doctor
     @Column(name="confirmPassword")
     private String confirmPassword;
 
-
     @Column(name="profileImage")
     private String profileImage; // file path or URL
 
