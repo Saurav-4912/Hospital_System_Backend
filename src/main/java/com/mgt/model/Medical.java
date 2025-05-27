@@ -15,8 +15,11 @@ public class Medical
     @Column(name="medicalStoreName")
     private String medicalStoreName;
 
-    @Column(name="ownerName")
-    private String ownerName;
+    @Column(name="firstName")
+    private String firstName;
+
+    @Column(name="lastName")
+    private String lastName;
 
     @Column(name="gender")
     private String gender;
@@ -54,10 +57,11 @@ public class Medical
     public Medical() {
     }
 
-    public Medical(Long id, String medicalStoreName, String ownerName, String gender, String emailAddress, String phoneNumber, String alternateContactNumber, String medicalLicenseNumber, String gstNumber, String username, String password, String confirmPassword, String profilePicture) {
+    public Medical(Long id, String medicalStoreName, String firstName, String lastName, String gender, String emailAddress, String phoneNumber, String alternateContactNumber, String medicalLicenseNumber, String gstNumber, String username, String password, String confirmPassword, String profilePicture) {
         this.id = id;
         this.medicalStoreName = medicalStoreName;
-        this.ownerName = ownerName;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.gender = gender;
         this.emailAddress = emailAddress;
         this.phoneNumber = phoneNumber;
@@ -86,12 +90,20 @@ public class Medical
         this.medicalStoreName = medicalStoreName;
     }
 
-    public String getOwnerName() {
-        return ownerName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getGender() {

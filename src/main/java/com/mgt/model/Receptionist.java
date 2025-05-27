@@ -12,8 +12,11 @@ public class Receptionist
     private Long id;
 
     // Personal Information
-    @Column(name="fullName")
-    private String fullName;
+    @Column(name="firstName")
+    private String firstName;
+
+    @Column(name="lastName")
+    private String lastName;
 
     @Column(name="emailAddress")
     private String emailAddress;
@@ -54,9 +57,10 @@ public class Receptionist
     public Receptionist() {
     }
 
-    public Receptionist(Long id, String fullName, String emailAddress, String gender, String mobileNumber, String emergencyContactNumber, String deskId, String qualification, String experience, String username, String password, String confirmPassword, String profilePicture) {
+    public Receptionist(Long id, String firstName, String lastName, String emailAddress, String gender, String mobileNumber, String emergencyContactNumber, String deskId, String qualification, String experience, String username, String password, String confirmPassword, String profilePicture) {
         this.id = id;
-        this.fullName = fullName;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.emailAddress = emailAddress;
         this.gender = gender;
         this.mobileNumber = mobileNumber;
@@ -78,12 +82,20 @@ public class Receptionist
         this.id = id;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmailAddress() {

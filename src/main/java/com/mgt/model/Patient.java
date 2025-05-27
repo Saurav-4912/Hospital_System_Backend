@@ -15,8 +15,11 @@ public class Patient
     @Column(name="id")
     private Long id;
 
-    @Column(name="fullName")
-    private String fullName;
+    @Column(name="firstName")
+    private String firstName;
+
+    @Column(name="lastName")
+    private String lastName;
 
     @Column(name="phone")
     private String phone;
@@ -47,9 +50,10 @@ public class Patient
     public Patient() {
     }
 
-    public Patient(Long id, String fullName, String phone, LocalDate dob, String gender, String bloodGroup, String cityState, String emergencyContact, String address, User user) {
+    public Patient(Long id, String firstName, String lastName, String phone, LocalDate dob, String gender, String bloodGroup, String cityState, String emergencyContact, String address, User user) {
         this.id = id;
-        this.fullName = fullName;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.phone = phone;
         this.dob = dob;
         this.gender = gender;
@@ -68,12 +72,20 @@ public class Patient
         this.id = id;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPhone() {
