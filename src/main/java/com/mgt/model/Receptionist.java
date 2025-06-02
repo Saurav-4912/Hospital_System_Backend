@@ -54,6 +54,7 @@ public class Receptionist
     @Column(name="profilePicture")
     private String profilePicture; // file path or URL
 
+
     public Receptionist() {
     }
 

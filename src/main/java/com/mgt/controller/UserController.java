@@ -18,6 +18,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -83,39 +84,48 @@ public class UserController
 
     @GetMapping("/getUserById")
     public ResponseEntity<?> getUserById(@RequestHeader("Authorization") String authorizationHeader) {
-
         try {
+            // Step 1: Validate JWT token presence
+            if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Collections.singletonMap("error", "Missing or invalid Authorization header"));
+            }
 
-             if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Collections.singletonMap("error", "Missing or invalid Authorization header"));
-        }
+            // Step 2: Extract token and userId
+            String token = authorizationHeader.substring(7);
+            Long userId = jwtService.extractUserId(token);  // You should implement this method
+            if (userId == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Collections.singletonMap("error", "Invalid JWT token"));
+            }
 
-        String token = authorizationHeader.substring(7);
-        Long userId = jwtService.extractUserId(token);
+            // Step 3: Retrieve user from DB
+            Optional<User> optionalUser = userRepo.findById(userId);
+            if (optionalUser.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(Collections.singletonMap("error", "User not found"));
+            }
 
-        if (userId == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Collections.singletonMap("error", "Invalid JWT token"));
-        }
+            User user = optionalUser.get();
 
-        Optional<User> optionalUser = userRepo.findById(userId);
-        if (optionalUser.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Collections.singletonMap("error", "User not found"));
-        }
+            // Step 4: Prepare response with role
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", user.getId());
+            response.put("firstName", user.getFirstName());
+            response.put("lastName", user.getLastName());
+            response.put("email", user.getUsername());
+            response.put("role", user.getRole());
 
-        return ResponseEntity.ok(optionalUser.get());
-            
+            return ResponseEntity.ok(response);
+
         } catch (Exception e) {
             e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Collections.singletonMap("error", "An error occurred: " + e.getMessage()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonMap("error", "An error occurred: " + e.getMessage()));
         }
-
-        
     }
-    
+
+
 
     @GetMapping("/testApi")
     public String getMethodName() {

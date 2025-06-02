@@ -39,7 +39,8 @@ public class PatientController {
    @PostMapping("/addPatient")
 @PreAuthorize("hasRole('PATIENT')")
 public ResponseEntity<?> addPatient(
-        @RequestParam String fullName,
+        @RequestParam String firstName,
+        @RequestParam String lastName,
         @RequestParam String phone,
         @RequestParam String dob, // as String, parse later
         @RequestParam String gender,
@@ -75,7 +76,8 @@ public ResponseEntity<?> addPatient(
 
         // Build patient object
         Patient patient = new Patient();
-        patient.setFullName(fullName);
+        patient.setFirstName(firstName);
+        patient.setLastName(lastName);
         patient.setPhone(phone);
         patient.setDob(dobParsed);
         patient.setGender(gender);
